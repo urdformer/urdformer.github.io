@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="URDFormer: A Pipeline for Constructing Articulated Simulation Environments from Real-World Images">
+  <meta name="keywords" content="URDFormer, real-to-sim, robot manipulation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GenAug</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4YJFFHEBP9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-4YJFFHEBP9');
+  </script>
+
+<!--  <script>-->
+<!--    function updateSingleVideo() {-->
+<!--      var demo = document.getElementById("single-menu-demos").value;-->
+<!--      var task = document.getElementById("single-menu-tasks").value;-->
+<!--      var inst = document.getElementById("single-menu-instances").value;-->
+
+<!--      console.log("single", demo, task, inst)-->
+
+<!--      var video = document.getElementById("single-task-result-video");-->
+<!--      video.src = "https://homes.cs.washington.edu/~mshr/cliport/results_web/" + -->
+<!--                  task + -->
+<!--                  "-two_stream_full_clip_lingunet_lat_transporter-n" + -->
+<!--                  demo + -->
+<!--                  "-train/videos/" + -->
+<!--                  task +-->
+<!--                  "-0000" + -->
+<!--                  inst + -->
+<!--                  ".mp4";-->
+<!--      video.playbackRate = 2.0;-->
+<!--      video.play();-->
+<!--    }-->
+
+<!--    function updateMultiVideo() {-->
+<!--      var demo = document.getElementById("multi-menu-demos").value;-->
+<!--      var task = document.getElementById("multi-menu-tasks").value;-->
+<!--      var inst = document.getElementById("multi-menu-instances").value;-->
+
+<!--      console.log("multi", demo, task, inst)-->
+
+<!--      var video = document.getElementById("multi-task-result-video");-->
+<!--      video.src = "https://homes.cs.washington.edu/~mshr/cliport/results_web/" + -->
+<!--                  task + -->
+<!--                  "-two_stream_full_clip_lingunet_lat_transporter-n" + -->
+<!--                  demo + -->
+<!--                  "-train/videos/multi-language-conditioned-" + -->
+<!--                  task +-->
+<!--                  "-0000" + -->
+<!--                  inst + -->
+<!--                  ".mp4";-->
+<!--      video.playbackRate = 2.0;-->
+<!--      video.play();-->
+<!--    }-->
+
+<!--  </script>-->
+
+
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" target="_blank" href="https://qiuyuchen14.github.io">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" target="_blank" href="https://sites.google.com/view/implicitaugmentation/home">
+            ISAGrasp
+          </a>
+          <a class="navbar-item" target="_blank" href="https://genaug.github.io/">
+            GenAug
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">URDFormer: A Pipeline for Constructing Articulated Simulation Environments from Real-World Images</h1>
+<!--          <h3 class="title is-4 conference-authors"><a target="_blank" href="https://www.robot-learning.org/">Under Submission</a></h3>-->
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a target="_blank" href="https://qiuyuchen14.github.io/">Zoey Chen</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a target="_blank" href="https://aaronwalsman.com/">Aaron Walsman</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a target="_blank" href="https://memmelma.github.io/">Marius Memmel </a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a target="_blank" href="https://kaichun-mo.github.io/">Kaichun Mo</a><sup>2</sup>,</span>
+            <span class="author-block">
+              <a target="_blank" href="https://scholar.google.com/citations?user=kD9uKC4AAAAJ&hl=en">Alex Fang</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a target="_blank" href="https://homes.cs.washington.edu/~fox/">Dieter Fox*</a><sup>1,2</sup>
+            </span>
+            <span class="author-block">
+              <a target="_blank" href="https://abhishekunique.github.io/">Abhishek Gupta*</a><sup>1,2</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Washington,</span>
+            <span class="author-block"><sup>2</sup>Nvidia</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a target="_blank" href="https://arxiv.org/abs/2302.06671"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a target="_blank" href="https://genaug.github.io/media/videos/GenAug_voice.mp4"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a target="_blank" href="https://github.com/urdformer/urdformer"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-fullhd">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop height="100%" width="100%">
+        <source src="https://genaug.github.io/media/videos/teaser.mp4"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+      </br>
+        We show that <span class="dcliport">URDFormer</span> policies can achieve widespread real-world generalization for tabletop manipulation, even when they are only provided with a
+few demonstrations in a simple training environment.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <div class="rows">
+    <!-- Animation. -->
+    <div class="rows is-centered ">
+      <div class="row is-full-width">
+<!--        <h2 class="title is-3"><span class="dcliport">GenAug</span></h2>-->
+
+        <!-- Interpolating. -->
+        <h3 class="title is-4"> <b>URDFOrmer:</b>  Generative Augmentation for Real-World Data Collection</h3>
+        <img src="https://genaug.github.io/media/images/augmented_combined.png" class="interpolation-image"
+         alt="Interpolate start reference image." />
+        <br/>
+        <br/>
+            Given the observation of the demonstration environment, <b>GenAug</b> automatically generates “augmented” RGBD images for entirely different and realistic environments, which display the visual realism and complexity of scenes that a robot might encounter in the real world.
+        <br/>
+
+     </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Robot learning methods have the potential for widespread generalization across tasks, environments,
+            and objects. However, these methods require large diverse datasets that are expensive to collect
+            in real-world robotics settings. For robot learning to generalize, we must be able to leverage sources
+            of data or priors beyond the robot’s own experience. In this work, we posit that image-text generative models,
+            which are pre-trained on large corpora of web-scraped data, can serve as such a data source.
+            We show that despite these generative models being trained on largely non-robotics data, they can serve as
+            effective ways to impart priors into the process of robot learning in a way that enables widespread
+            generalization. In particular, we show how pre-trained generative models can serve as effective tools
+            for semantically meaningful data augmentation. By leveraging these pre-trained models for generating
+            appropriate “semantic” data augmentations, we propose a system  <span class="dcliport">GenAug</span> that
+            is able to significantly improve policy generalization. We apply GenAug to tabletop manipulation tasks, showing the ability
+            to re-target behavior to novel scenarios, while only requiring marginal amounts of real-world data.
+            We demonstrate the efficacy of this system on a number of object manipulation problems in the real world,
+            showing a 40% improvement in generalization to novel scenes and objects.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+  </div>
+    <!-- Paper video. -->
+    </br>
+    </br>
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-two-thirds">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MxcmKKvdBhk?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+</section>
+
+
+<section class="hero teaser">
+  <div class="columns is-centered has-text-centered">
+    <div class="hero-body">
+    <h2 class="title is-3"><span class="dcliport">Real-World Experiments</span></h2>
+      <h2 class="subtitle has-text-centered">
+    </br>
+       By training on a dataset extrapolated from only 10 demonstrations in this simple environment on the left,
+      the robot is able
+        </br>
+        to solve the task in entirely different environments and objects.
+    </h2>
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop height="100%">
+            <source src="https://genaug.github.io/media/videos/bowl2coaster_cropped.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay controls muted loop height="100%">
+            <source src="https://genaug.github.io/media/videos/box2basket_cropped.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay controls muted loop height="100%">
+            <source src="https://genaug.github.io/media/videos/bowl2bowl_cropped.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+
+<section class="hero teaser">
+  <div class="columns is-centered has-text-centered">
+    <div class="hero-body">
+      <br/>
+      <br/>
+    <h2 class="title is-3"><span class="dcliport">Simulation Experiments</span></h2>
+      <h2 class="subtitle has-text-centered">
+    </br>
+       To further study in depth the effectiveness of GenAug, we conduct large-scale experiments with other baselines in simulation.
+        </br>In particular, we organize baseline methods as (1) in-domain augmentation methods and (2) learning from out-of-domain priors.
+      </h2>
+      <br/>
+      <br/>
+      <h2 class="title is-3"><span class="dcliport">Table-top Manipulation Tasks</span></h2>
+      <h2 class="subtitle has-text-centered">
+    </br>
+        </h2>
+      <img src="https://genaug.github.io/media/images/sim_table.png"  width="1200" height="600"/>
+        <br/>
+      <img src="https://genaug.github.io/media/images/sim2.png"  width="800" height="600"/>
+        <br/>
+      <h2 class="title is-3"><span class="dcliport">Behavior Cloning Tasks</span></h2>
+      <h2 class="subtitle has-text-centered">
+    </br>
+        </h2>
+      </br>
+      In addition, we show GenAug can apply to Behavior Cloning tasks such as ”close the top drawer”, with a different robot:"Fetch".
+      <br/>In particular,  we collected 100 demonstrations and trained a CNN-MLP behavior cloning policy finetuned with R3M embeddings.
+      <br/>The input is the RGB observation and the output is a 8-dim action vector.
+      <br/>We tested on 100 unseen backgrounds using iGibson rooms and observed GenAug is able to achieve 60% success rate
+      <br/>while policy without Genaug is only 1%, leading to almost 60% improvement.
+
+      <br/>
+      <img src="https://genaug.github.io/media/images/genaug_bc_train.gif"  width="700" height="260" />
+        <br/>
+      <br/>
+
+     <img src="https://genaug.github.io/media/images/genaug_bc_test.gif"  width="780" height="320" />
+      <br/>
+  </div>
+  </div>
+</section>
+
+<!--<section class="hero teaser">-->
+<!--  <div class="container is-fullhd">-->
+<!--    <div class="hero-body">-->
+<!--    <h2 class="title is-3"><span class="dcliport">Real-World Experiments</span></h2>-->
+<!--      <h2 class="subtitle has-text-centered">-->
+<!--    </br>-->
+<!--       By training on a dataset extrapolated from only 10 demonstrations in this simple environment on the left,-->
+<!--      the robot is able to solve the task in entirely different environments and objects.-->
+<!--    </h2>-->
+<!--      <video id="box2basket" autoplay muted loop  height="100%" width="100%">-->
+<!--        <source src="https://genaug.github.io/media/videos/bowl2coaster.mp4"-->
+<!--                type="video/mp4">-->
+<!--      </video>-->
+<!--      <video id="bowl2bowl" autoplay muted loop  height="100%" width="100%">-->
+<!--        <source src="https://genaug.github.io/media/videos/bowl2bowl.mp4"-->
+<!--                type="video/mp4">-->
+<!--      </video>-->
+<!--      <video id="box2basket" autoplay muted loop  height="100%" width="100%">-->
+<!--        <source src="https://genaug.github.io/media/videos/box2basket.mp4"-->
+<!--                type="video/mp4">-->
+<!--      </video>-->
+
+
+
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;</section>&ndash;&gt;-->
+
+<!--<section class="hero teaser">-->
+<!--  <div class="container is-fullhd">-->
+<!--    <div class="hero-body">-->
+<!--      <video id="texture" autoplay muted loop  height="90%">-->
+<!--        <source src="https://genaug.github.io/media/videos/box_to_basket1.mp4"-->
+<!--                type="video/mp4">-->
+<!--      </video>-->
+<!--&lt;!&ndash;      <h2 class="subtitle has-text-centered">&ndash;&gt;-->
+<!--&lt;!&ndash;      </br>&ndash;&gt;-->
+<!--&lt;!&ndash;        <span class="dcliport">GenAug</span> is an semantic data augmentation method to enable broad robot generalization, by leveraging pre-trained generative models.&ndash;&gt;-->
+<!--&lt;!&ndash;      </h2>&ndash;&gt;-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+
+<!--<section class="hero teaser">-->
+<!--  <div class="container is-fullhd">-->
+<!--    <div class="hero-body">-->
+<!--      <video id="texture" autoplay muted loop  height="90%">-->
+<!--        <source src="https://genaug.github.io/media/videos/box_to_basket1.mp4"-->
+<!--                type="video/mp4">-->
+<!--      </video>-->
+<!--&lt;!&ndash;      <h2 class="subtitle has-text-centered">&ndash;&gt;-->
+<!--&lt;!&ndash;      </br>&ndash;&gt;-->
+<!--&lt;!&ndash;        <span class="dcliport">GenAug</span> is an semantic data augmentation method to enable broad robot generalization, by leveraging pre-trained generative models.&ndash;&gt;-->
+<!--&lt;!&ndash;      </h2>&ndash;&gt;-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+
+<!--<section class="hero teaser">-->
+<!--  <div class="container is-fullhd">-->
+<!--    <div class="hero-body">-->
+<!--      <video id="texture" autoplay muted loop  height="90%">-->
+<!--        <source src="https://genaug.github.io/media/videos/box_to_basket1.mp4"-->
+<!--                type="video/mp4">-->
+<!--      </video>-->
+<!--&lt;!&ndash;      <h2 class="subtitle has-text-centered">&ndash;&gt;-->
+<!--&lt;!&ndash;      </br>&ndash;&gt;-->
+<!--&lt;!&ndash;        <span class="dcliport">GenAug</span> is an semantic data augmentation method to enable broad robot generalization, by leveraging pre-trained generative models.&ndash;&gt;-->
+<!--&lt;!&ndash;      </h2>&ndash;&gt;-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+
+
+<section class="hero teaser">
+  <div class="columns is-centered has-text-centered">
+    <div class="hero-body">
+    <h2 class="title is-3"><span class="dcliport">Approach</span></h2>
+      <h2 class="subtitle has-text-centered">
+    </br>
+        </br>
+        1. <b>GenAug</b>:
+    </br>
+        </br>
+        Given a demonstration on one simple environment, GenAug can automatically add distractor objects,
+        </br>
+        change the object texture,  change object classes and change table and background.
+    </h2>
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay controls muted loop height="100%">
+            <source src="https://genaug.github.io/media/videos/distractor.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop height="100%">
+            <source src="https://genaug.github.io/media/videos/object.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay controls muted loop height="100%">
+            <source src="https://genaug.github.io/media/videos/table.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay controls muted loop height="100%">
+            <source src="https://genaug.github.io/media/videos/texture.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+   <div class="rows is-centered ">
+  <div class="container is-max-widescreen">
+    <div class="hero-body">
+      <h2 class="subtitle has-text-centered">
+    </br>
+        2. <b>Data Generation</b>
+    </br>
+      We randomly select the mode and augment the initial dataset into a large and diverse dataset.
+      </h2>
+      <video id="object" autoplay muted loop  height="100%" width="100%">
+        <source src="https://genaug.github.io/media/videos/augmented_data.mp4"
+                type="video/mp4">
+      </video>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-fullhd">
+    <div class="hero-body">
+      <h2 class="subtitle has-text-centered">
+    </br>
+        3. <b>System</b>
+    </br>
+        We generate a large and diverse augmented dataset from a small amount of human demonstrations collected in a simple environment,
+        and use this <b>augmented</b> dataset to train a language-conditioned robot policy and deploy it in the real-world.
+      </h2>
+      <img src="https://genaug.github.io/media/images/training.png" class="interpolation-image"
+         alt="Interpolate start reference image." />
+        <br/>
+<!--      <h2 class="subtitle has-text-centered">-->
+<!--&lt;!&ndash;      </br>&ndash;&gt;-->
+<!--&lt;!&ndash;        <span class="dcliport">GenAug</span> is an semantic data augmentation method to enable broad robot generalization, by leveraging pre-trained generative models.&ndash;&gt;-->
+<!--&lt;!&ndash;      </h2>&ndash;&gt;-->
+<!--      <br/>-->
+<!--            Slide to view different modes of -->
+<!--        <br/>-->
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+   <div class="rows is-centered ">
+  <div class="container is-max-widescreen">
+    <div class="hero-body">
+      <h2 class="subtitle has-text-centered">
+    </br>
+        4. <b>Data Collection</b>
+    </br>
+        To collect demonstrations in the real-world, a user generates a small dataset by specifying pick and place locations. These 2D locations are projected to the 3D points in the robot coordinates using calibrated depth maps.
+      </h2>
+      <video id="object" autoplay muted loop  height="100%" width="100%">
+        <source src="https://genaug.github.io/media/videos/datacollection.mp4"
+                type="video/mp4">
+      </video>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!--<section class="hero teaser">-->
+<!--  <div class="container is-fullhd">-->
+<!--    <div class="hero-body">-->
+<!--    <h2 class="title is-3"><span class="dcliport">Concurrent Work</span></h2>-->
+<!--&lt;!&ndash;      <h2 class="subtitle has-text-centered">&ndash;&gt;-->
+<!--    </br>-->
+<!--        Check out other awesome work that also leverages pretrained generative models for robot learning!-->
+<!--        </br>-->
+<!--        <a href="https://diffusion-rosie.github.io/">Scaling Robot Learning with Semantically Imagined Experience by Yu et al. </a> also shows applying text-to-image diffusion models on top of the existing robotic manipulation datasets can improve policies on unseen scenes like new objects and distractors.-->
+<!--        </br>-->
+<!--        <a href="https://arxiv.org/abs/2212.05711">CACTI: A Framework for Scalable Multi-Task Multi-Scene Visual Imitation Learning by Mandi et al.</a> shows using generative models like stable diffusion to add distractors of the scene can robustify the multi-task policy learning.-->
+<!--        </br>-->
+<!--        <a href="https://arxiv.org/pdf/2210.02438.pdf">DALL-E-Bot: Introducing Web-Scale Diffusion Models to Robotics by Kapelyukh et al</a> leverages DALL-E to generate goal images for rearrangement tasks.-->
+
+<!--    </h2>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-fullhd">
+    <div class="hero-body">
+    <h2 class="title is-3"><span class="dcliport">BibTeX</span></h2>
+    <pre><code>@article{chen2023genaug,
+  title={GenAug: Retargeting behaviors to unseen situations via Generative Augmentation},
+  author={Chen, Zoey and Kiami, Sho and Gupta, Abhishek and Kumar, Vikash},
+  journal={arXiv preprint arXiv:2302.06671},
+  year={2023}
+}</code></pre>
+  </div>
+    </div>
+</section>
+
+<!--<section class="hero teaser">-->
+<!--  <div class="container is-fullhd">-->
+<!--    <div class="hero-body">-->
+<!--      <h2 class="title is-3"><span class="dcliport">GenAug Overview</span></h2>-->
+<!--      <h2 class="subtitle has-text-centered">-->
+<!--      </br>-->
+<!--         Given a demonstration on one simple environment, GenAug can automatically add distractor objects, change the object texture, change object classes and change table and background.-->
+<!--      </h2>-->
+<!--      <video id="distractor" autoplay muted loop  height="70%" width="70%">-->
+<!--        <source src="https://genaug.github.io/media/videos/distractor.mp4"-->
+<!--                type="video/mp4">-->
+<!--      </video>-->
+<!--&lt;!&ndash;      <h2 class="subtitle has-text-centered">&ndash;&gt;-->
+<!--&lt;!&ndash;      </br>&ndash;&gt;-->
+<!--&lt;!&ndash;        <span class="dcliport">GenAug</span> is an semantic data augmentation method to enable broad robot generalization, by leveraging pre-trained generative models.&ndash;&gt;-->
+<!--&lt;!&ndash;      </h2>&ndash;&gt;-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+
+<!--<section class="hero teaser">-->
+<!--  <div class="container is-fullhd">-->
+<!--    <div class="hero-body">-->
+<!--      <video id="object" autoplay muted loop  height="70%" width="70%">-->
+<!--        <source src="https://genaug.github.io/media/videos/object.mp4"-->
+<!--                type="video/mp4">-->
+<!--      </video>-->
+<!--&lt;!&ndash;      <h2 class="subtitle has-text-centered">&ndash;&gt;-->
+<!--&lt;!&ndash;      </br>&ndash;&gt;-->
+<!--&lt;!&ndash;        <span class="dcliport">GenAug</span> is an semantic data augmentation method to enable broad robot generalization, by leveraging pre-trained generative models.&ndash;&gt;-->
+<!--&lt;!&ndash;      </h2>&ndash;&gt;-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+
+<!--<section class="hero teaser">-->
+<!--  <div class="container is-fullhd">-->
+<!--    <div class="hero-body">-->
+<!--      <video id="table" autoplay muted loop  height="70%" width="70%">-->
+<!--        <source src="https://genaug.github.io/media/videos/table.mp4"-->
+<!--                type="video/mp4">-->
+<!--      </video>-->
+<!--&lt;!&ndash;      <h2 class="subtitle has-text-centered">&ndash;&gt;-->
+<!--&lt;!&ndash;      </br>&ndash;&gt;-->
+<!--&lt;!&ndash;        <span class="dcliport">GenAug</span> is an semantic data augmentation method to enable broad robot generalization, by leveraging pre-trained generative models.&ndash;&gt;-->
+<!--&lt;!&ndash;      </h2>&ndash;&gt;-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+
+<!--<section class="hero teaser">-->
+<!--  <div class="container is-fullhd">-->
+<!--    <div class="hero-body">-->
+<!--      <video id="texture" autoplay muted loop  height="70%" width="70%">-->
+<!--        <source src="https://genaug.github.io/media/videos/texture.mp4"-->
+<!--                type="video/mp4">-->
+<!--      </video>-->
+<!--&lt;!&ndash;      <h2 class="subtitle has-text-centered">&ndash;&gt;-->
+<!--&lt;!&ndash;      </br>&ndash;&gt;-->
+<!--&lt;!&ndash;        <span class="dcliport">GenAug</span> is an semantic data augmentation method to enable broad robot generalization, by leveraging pre-trained generative models.&ndash;&gt;-->
+<!--&lt;!&ndash;      </h2>&ndash;&gt;-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+
+
+
+
+
+<!--<section class="section">-->
+<!--  <div class="container is-max-widescreen">-->
+
+<!--    <div class="rows">-->
+
+
+<!--    &lt;!&ndash; Animation. &ndash;&gt;-->
+<!--    <div class="rows is-centered ">-->
+<!--      <div class="row is-full-width">-->
+<!--        <h2 class="title is-3"><span class="dcliport">CLIPort</span></h2>-->
+
+<!--        &lt;!&ndash; Interpolating. &ndash;&gt;-->
+<!--        <h3 class="title is-4">Two-Stream Architecture</h3>-->
+<!--        <div class="content has-text-justified">-->
+<!--          <p>-->
+<!--            Broadly inspired by (or vaguely analogous to) the <a target=”_blank” href="https://en.wikipedia.org/wiki/Two-streams_hypothesis">two-stream hypothesis in cognitive psychology</a>, we present a two-stream architecture -->
+<!--            for vision-based manipulation with semantic and spatial pathways. The semantic stream uses a pre-trained CLIP model  -->
+<!--            to encode RGB and language-goal input. Since CLIP is trained with large amounts of image-caption pairs from the internet,-->
+<!--            it acts as a powerful semantic prior for <a target="_blank" href="https://distill.pub/2021/multimodal-neurons/">grounding visual concepts</a> like colors, shapes, parts, texts, and object categories. -->
+<!--            The spatial stream is a tabula rasa fully-convolutional network that encodes RGB-D input. -->
+<!--          </p>-->
+<!--        </div>-->
+<!--        <img src="https://cliport.github.io/media/images/two_stream_architecture.png" class="interpolation-image" -->
+<!--         alt="Interpolate start reference image." />-->
+<!--        <br/>-->
+<!--        <br/>-->
+<!--            <b>Paradigm 1:</b> Unlike existing object detectors, CLIP is not limited to a predefined set of object classes. And unlike other vision-language models, it's not restricted by a top-down pipeline that detects objects with bounding boxes or instance segmentations. This allows us to forgo the traditional paradigm of training explicit detectors for cloths, pliers, chessboard squares, cherry stems, and other arbitrary things. -->
+<!--        <br/>-->
+<!--        <br/>-->
+<!--        <br/>-->
+<!--        &lt;!&ndash;/ Interpolating. &ndash;&gt;-->
+
+<!--        &lt;!&ndash; Re-rendering. &ndash;&gt;-->
+<!--        <h3 class="title is-4">TransporterNets</h3>-->
+<!--        <div class="content has-text-justified">-->
+<!--          <p>-->
+<!--            We use this two-stream architecture in all three networks of <a target=”_blank” href="https://transporternets.github.io/">TransporterNets</a> -->
+<!--            to predict pick and place affordances at each timestep. TransporterNets first attends to a local region to decide where to pick, -->
+<!--            then computes a placement location by finding the best match for the picked region through -->
+<!--            cross-correlation of deep visual features. This structure serves as a powerful inductive bias for learning <a target="_blank" href="https://fabianfuchsml.github.io/equivariance1of2/">roto-translationally equivariant</a> representations in tabletop environments.-->
+
+<!--          </p>-->
+<!--        </div>-->
+<!--        <div class="content has-text-centered">-->
+<!--          <video id="transporter-gif"-->
+<!--                 controls-->
+<!--                 muted-->
+<!--                 autoplay-->
+<!--                 loop-->
+<!--                 width="40%">-->
+<!--            <source src="https://transporternets.github.io/images/animation.mp4"-->
+<!--                    type="video/mp4">-->
+<!--          </video>-->
+<!--          <p>-->
+<!--          Credit: <a href="https://transporternets.github.io/">Zeng et. al (Google)</a>-->
+<!--          </p>-->
+<!--        </div>-->
+<!--        <br/>-->
+<!--            <b>Paradigm 2:</b> TransporterNets takes an <a target="_blank" href="https://en.wikipedia.org/wiki/Ecological_psychology">action-centric approach</a> to perception where the objective is to <i>detect actions</i> rather than <i>detect objects</i> and then learn a policy. Keeping the action-space grounded in the perceptual input allows us to exploit geometric symmetries for efficient representation learning. -->
+<!--            When combined with CLIP's pre-trained representations, this enables the learning of reusable manipulation skills without any "objectness" assumptions.-->
+<!--        <br/>-->
+<!--        <br/>-->
+<!--        <br/>-->
+
+<!--        &lt;!&ndash;/ Re-rendering. &ndash;&gt;-->
+
+<!--        <h2 class="title is-3">Results</h2>-->
+
+<!--        <div class="columns">-->
+<!--          <div class="column has-text-centered">-->
+<!--            <h3 class="title is-5">Single-Task Models</h3>-->
+
+<!--            Trained with-->
+<!--            <div class="select is-small">-->
+<!--              <select id="single-menu-demos" onchange="updateSingleVideo()">-->
+<!--              <option value="1">1</option>-->
+<!--              <option value="10">10</option>-->
+<!--              <option value="100">100</option>-->
+<!--              <option value="1000" selected="selected">1000</option>-->
+<!--              </select>-->
+<!--            </div>-->
+<!--            demos, evaluated on -->
+<!--            <div class="select is-small">     -->
+<!--              <select id="single-menu-tasks" onchange="updateSingleVideo()">-->
+<!--              <option value="align-rope">align-rope</option>-->
+<!--              <option value="assembling-kits-seq-seen-colors">assembling-kits-seq-seen-colors</option>-->
+<!--              <option value="assembling-kits-seq-unseen-colors">assembling-kits-seq-unseen-colors</option>-->
+<!--              <option value="packing-boxes-pairs-seen-colors">packing-boxes-pairs-seen-colors</option>-->
+<!--              <option value="packing-boxes-pairs-unseen-colors">packing-boxes-pairs-unseen-colors</option>-->
+<!--              <option value="packing-seen-google-objects-seq" selected="selected">packing-seen-google-objects-seq</option>-->
+<!--              <option value="packing-unseen-google-objects-seq">packing-unseen-google-objects-seq</option>-->
+<!--              <option value="packing-seen-google-objects-group">packing-seen-google-objects-group</option>-->
+<!--              <option value="packing-unseen-google-objects-group">packing-unseen-google-objects-group</option>-->
+<!--              <option value="packing-shapes">packing-shapes</option>-->
+<!--              <option value="put-block-in-bowl-seen-colors">put-block-in-bowl-seen-colors</option>-->
+<!--              <option value="put-block-in-bowl-unseen-colors">put-block-in-bowl-unseen-colors</option>-->
+<!--              <option value="separating-piles-seen-colors">separating-piles-seen-colors</option>-->
+<!--              <option value="separating-piles-unseen-colors">separating-piles-unseen-colors</option>-->
+<!--              <option value="stack-block-pyramid-seq-seen-colors">stack-block-pyramid-seq-seen-colors</option>-->
+<!--              <option value="stack-block-pyramid-seq-unseen-colors">stack-block-pyramid-seq-unseen-colors</option>-->
+<!--              <option value="towers-of-hanoi-seq-seen-colors">towers-of-hanoi-seq-seen-colors</option>-->
+<!--              <option value="towers-of-hanoi-seq-unseen-colors">towers-of-hanoi-seq-unseen-colors</option>-->
+<!--              </select>-->
+<!--            </div>-->
+<!--            instance-->
+<!--            <div class="select is-small">-->
+<!--              <select id="single-menu-instances" onchange="updateSingleVideo()">-->
+<!--              <option value="01">01</option>-->
+<!--              <option value="02">02</option>-->
+<!--              <option value="03">03</option>-->
+<!--              <option value="04">04</option>-->
+<!--              <option value="05" selected="selected">05</option>-->
+<!--              </select>-->
+<!--            </div>-->
+<!--            <br/>-->
+<!--            <br/>-->
+
+<!--            <video id="single-task-result-video"-->
+<!--                   controls-->
+<!--                   muted-->
+<!--                   autoplay-->
+<!--                   loop-->
+<!--                   width="100%">-->
+<!--              <source src="https://homes.cs.washington.edu/~mshr/cliport/results_web/packing-seen-google-objects-seq-two_stream_full_clip_lingunet_lat_transporter-n1000-train/videos/packing-seen-google-objects-seq-000005.mp4"-->
+<!--                      type="video/mp4">-->
+<!--            </video>-->
+<!--          </div>-->
+
+<!--          <div class="column has-text-centered">-->
+<!--            <h3 class="title is-5">One Multi-Task Model</h3>-->
+<!--            -->
+<!--            Trained with-->
+<!--            <div class="select is-small">-->
+<!--              <select id="multi-menu-demos" onchange="updateMultiVideo()">-->
+<!--              <option value="1">1 T</option>-->
+<!--              <option value="10">10 T</option>-->
+<!--              <option value="100">100 T</option>-->
+<!--              <option value="1000" selected="selected">1000 T</option>-->
+<!--              </select>-->
+<!--            </div>-->
+<!--            demos, evaluated on  -->
+<!--            <div class="select is-small">   -->
+<!--              <select id="multi-menu-tasks" onchange="updateMultiVideo()">-->
+<!--              <option value="align-rope">align-rope</option>-->
+<!--              <option value="assembling-kits-seq-seen-colors">assembling-kits-seq-seen-colors</option>-->
+<!--              <option value="assembling-kits-seq-unseen-colors">assembling-kits-seq-unseen-colors</option>-->
+<!--              <option value="packing-boxes-pairs-seen-colors" selected="selected">packing-boxes-pairs-seen-colors</option>-->
+<!--              <option value="packing-boxes-pairs-unseen-colors">packing-boxes-pairs-unseen-colors</option>-->
+<!--              <option value="packing-seen-google-objects-seq">packing-seen-google-objects-seq</option>-->
+<!--              <option value="packing-unseen-google-objects-seq">packing-unseen-google-objects-seq</option>-->
+<!--              <option value="packing-seen-google-objects-group">packing-seen-google-objects-group</option>-->
+<!--              <option value="packing-unseen-google-objects-group">packing-unseen-google-objects-group</option>-->
+<!--              <option value="packing-shapes">packing-shapes</option>-->
+<!--              <option value="put-block-in-bowl-seen-colors">put-block-in-bowl-seen-colors</option>-->
+<!--              <option value="put-block-in-bowl-unseen-colors">put-block-in-bowl-unseen-colors</option>-->
+<!--              <option value="separating-piles-seen-colors">separating-piles-seen-colors</option>-->
+<!--              <option value="separating-piles-unseen-colors">separating-piles-unseen-colors</option>-->
+<!--              <option value="stack-block-pyramid-seq-seen-colors">stack-block-pyramid-seq-seen-colors</option>-->
+<!--              <option value="stack-block-pyramid-seq-unseen-colors">stack-block-pyramid-seq-unseen-colors</option>-->
+<!--              <option value="towers-of-hanoi-seq-seen-colors">towers-of-hanoi-seq-seen-colors</option>-->
+<!--              <option value="towers-of-hanoi-seq-unseen-colors">towers-of-hanoi-seq-unseen-colors</option>-->
+<!--              </select>-->
+<!--            </div>-->
+<!--            instance-->
+<!--            <div class="select is-small">-->
+<!--              <select id="multi-menu-instances" onchange="updateMultiVideo()">-->
+<!--              <option value="01">01</option>-->
+<!--              <option value="02">02</option>-->
+<!--              <option value="03">03</option>-->
+<!--              <option value="04" selected="selected">04</option>-->
+<!--              <option value="05">05</option>-->
+<!--              </select>-->
+<!--            </div>-->
+<!--            </br>-->
+<!--            </br>-->
+
+<!--            <video id="multi-task-result-video"-->
+<!--                   controls-->
+<!--                   muted-->
+<!--                   autoplay-->
+<!--                   loop-->
+<!--                   width="100%">-->
+<!--              <source src="https://homes.cs.washington.edu/~mshr/cliport/results_web/packing-boxes-pairs-seen-colors-two_stream_full_clip_lingunet_lat_transporter-n1000-train/videos/multi-language-conditioned-packing-boxes-pairs-seen-colors-000004.mp4"-->
+<!--                      type="video/mp4">-->
+<!--            </video>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        </br>-->
+
+<!--        <h3 class="title is-4">Affordance Predictions</h3>-->
+<!--        <div class="content has-text-justified">-->
+<!--          <p>-->
+<!--            Examples of pick and place affordance predictions from multi-task <span class="dcliport">CLIPort</span> models:-->
+<!--          </p>-->
+<!--        </div>-->
+<!--        <br/>-->
+<!--        <img src="https://cliport.github.io/media/images/affordances.png" class="interpolation-image" -->
+<!--         alt="Interpolate start reference image."/>-->
+<!--        <br/>-->
+<!--        <br/>-->
+<!--        <img src="https://cliport.github.io/media/images/affordance2.png" class="interpolation-image" -->
+<!--         alt="Interpolate start reference image."/>-->
+
+<!--      </div>-->
+<!--    </div>-->
+
+<!--  </div>-->
+<!--</section>-->
+
+
+<!--<section class="section" id="BibTeX">-->
+<!--  <div class="container is-max-widescreen content">-->
+<!--    <h2 class="title">BibTeX</h2>-->
+<!--    <pre><code>@inproceedings{shridhar2021cliport,-->
+<!--  title     = {GenAug: Retargeting behaviors to unseen situations via Generative Augmentation},-->
+<!--  author    = {Chen, Zoey and Kiami, Sho and Gupta, Abhishek and Kumar, Vikash},-->
+<!--  booktitle = {Arxiv},-->
+<!--  year      = {2023},-->
+<!--}</code></pre>-->
+<!--  </div>-->
+<!--</section>-->
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content has-text-centered">
+          <p>
+            Website template borrowed from <a href="https://github.com/cliport/clipoprt.github.io">CLIPort</a> made by the amazing <a href="https://mohitshridhar.com/">Mohit Shridhar</a> and  <a href="https://github.com/nerfies/nerfies.github.io">NeRFies</a> made by the amazing <a href="https://keunhong.com/">Keunhong Park</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
