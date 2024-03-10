@@ -170,7 +170,7 @@
 <!--        <h2 class="title is-3"><span class="dcliport">GenAug</span></h2>-->
 
         <!-- Interpolating. -->
-        <h3 class="title is-4"> <b>URDFOrmer:</b>  Generative Augmentation for Real-World Data Collection</h3>
+        <h3 class="title is-4"> <b>URDFOrmer Application</b></h3>
         <img src="https://urdformer.github.io/media/images/application.png" class="interpolation-image"
          alt="Interpolate start reference image." />
         <br/>
@@ -226,6 +226,41 @@
 
 </section>
 
+<section class="hero teaser">
+  <div class="columns is-centered has-text-centered">
+    <div class="hero-body">
+    <h2 class="title is-3"><span class="dcliport">Articulated Digital Twins from Images</span></h2>
+      <h2 class="subtitle has-text-centered">
+    </br>
+      URDFormer enables fast simulation content generation directly from images, either from internet or captured from your phone.
+    </h2>
+    <div class="container">
+      <img src="https://urdformer.github.io/media/images/urdformer_cabinets.gif" class="interpolation-image"
+         alt="Interpolate start reference image." />
+      <h2 class="subtitle has-text-centered">
+      </br>
+       Predicted URDFs of cabinets with different configurations from internet images
+      </h2>
+
+      <img src="https://urdformer.github.io/media/images/urdformer_appliance.gif" class="interpolation-image"
+         alt="Interpolate start reference image." />
+      <h2 class="subtitle has-text-centered">
+      </br>
+        Predicted URDFs of different kitchen appliances from interenet images.
+      </h2>
+
+      <img src="https://urdformer.github.io/media/images/urdformer_phone_kitchens.gif" class="interpolation-image"
+         alt="Interpolate start reference image." />
+      <h2 class="subtitle has-text-centered">
+      </br>
+        We also visualize several examples of predicted URDFs of real-world kitchens captured by a phone.
+      </h2>
+
+    </div>
+  </div>
+  </div>
+</section>
+
 
 <section class="hero teaser">
   <div class="columns is-centered has-text-centered">
@@ -265,151 +300,6 @@
   </div>
 </section>
 
-
-<section class="hero teaser">
-  <div class="columns is-centered has-text-centered">
-    <div class="hero-body">
-      <br/>
-      <br/>
-    <h2 class="title is-3"><span class="dcliport">Simulation Experiments</span></h2>
-      <h2 class="subtitle has-text-centered">
-    </br>
-       To further study in depth the effectiveness of GenAug, we conduct large-scale experiments with other baselines in simulation.
-        </br>In particular, we organize baseline methods as (1) in-domain augmentation methods and (2) learning from out-of-domain priors.
-      </h2>
-      <br/>
-      <br/>
-      <h2 class="title is-3"><span class="dcliport">Table-top Manipulation Tasks</span></h2>
-      <h2 class="subtitle has-text-centered">
-    </br>
-        </h2>
-      <img src="https://urdformer.github.io/media/images/sim_table.png"  width="1200" height="600"/>
-        <br/>
-      <img src="https://urdformer.github.io/media/images/sim2.png"  width="800" height="600"/>
-        <br/>
-      <h2 class="title is-3"><span class="dcliport">Behavior Cloning Tasks</span></h2>
-      <h2 class="subtitle has-text-centered">
-    </br>
-        </h2>
-      </br>
-      In addition, we show GenAug can apply to Behavior Cloning tasks such as ”close the top drawer”, with a different robot:"Fetch".
-      <br/>In particular,  we collected 100 demonstrations and trained a CNN-MLP behavior cloning policy finetuned with R3M embeddings.
-      <br/>The input is the RGB observation and the output is a 8-dim action vector.
-      <br/>We tested on 100 unseen backgrounds using iGibson rooms and observed GenAug is able to achieve 60% success rate
-      <br/>while policy without Genaug is only 1%, leading to almost 60% improvement.
-
-      <br/>
-      <img src="https://urdformer.github.io/media/images/genaug_bc_train.gif"  width="700" height="260" />
-        <br/>
-      <br/>
-
-     <img src="https://urdformer.github.io/media/images/genaug_bc_test.gif"  width="780" height="320" />
-      <br/>
-  </div>
-  </div>
-</section>
-
-
-<section class="hero teaser">
-  <div class="columns is-centered has-text-centered">
-    <div class="hero-body">
-    <h2 class="title is-3"><span class="dcliport">Approach</span></h2>
-      <h2 class="subtitle has-text-centered">
-    </br>
-        </br>
-        1. <b>URDFormer</b>:
-    </br>
-        </br>
-        Given a demonstration on one simple environment, GenAug can automatically add distractor objects,
-        </br>
-        change the object texture,  change object classes and change table and background.
-    </h2>
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-steve">
-          <video poster="" id="steve" autoplay controls muted loop height="100%">
-            <source src="https://urdformer.github.io/media/videos/distractor.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-fullbody">
-          <video poster="" id="fullbody" autoplay controls muted loop height="100%">
-            <source src="https://urdformer.github.io/media/videos/object.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-shiba">
-          <video poster="" id="shiba" autoplay controls muted loop height="100%">
-            <source src="https://urdformer.github.io/media/videos/table.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-shiba">
-          <video poster="" id="shiba" autoplay controls muted loop height="100%">
-            <source src="https://genaug.github.io/media/videos/texture.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-</section>
-
-<section class="hero teaser">
-   <div class="rows is-centered ">
-  <div class="container is-max-widescreen">
-    <div class="hero-body">
-      <h2 class="subtitle has-text-centered">
-    </br>
-        2. <b>Data Generation</b>
-    </br>
-      We randomly select the mode and augment the initial dataset into a large and diverse dataset.
-      </h2>
-      <video id="object" autoplay muted loop  height="100%" width="100%">
-        <source src="https://urdformer.github.io/media/videos/augmented_data.mp4"
-                type="video/mp4">
-      </video>
-    </div>
-    </div>
-  </div>
-</section>
-
-<section class="hero teaser">
-  <div class="container is-fullhd">
-    <div class="hero-body">
-      <h2 class="subtitle has-text-centered">
-    </br>
-        3. <b>System</b>
-    </br>
-        We generate a large and diverse augmented dataset from a small amount of human demonstrations collected in a simple environment,
-        and use this <b>augmented</b> dataset to train a language-conditioned robot policy and deploy it in the real-world.
-      </h2>
-      <img src="https://urdformer.github.io/media/images/training.png" class="interpolation-image"
-         alt="Interpolate start reference image." />
-        <br/>
-    </div>
-  </div>
-</section>
-
-<section class="hero teaser">
-   <div class="rows is-centered ">
-  <div class="container is-max-widescreen">
-    <div class="hero-body">
-      <h2 class="subtitle has-text-centered">
-    </br>
-        4. <b>Data Collection</b>
-    </br>
-        To collect demonstrations in the real-world, a user generates a small dataset by specifying pick and place locations. These 2D locations are projected to the 3D points in the robot coordinates using calibrated depth maps.
-      </h2>
-      <video id="object" autoplay muted loop  height="100%" width="100%">
-        <source src="https://urdformer.github.io/media/videos/datacollection.mp4"
-                type="video/mp4">
-      </video>
-    </div>
-    </div>
-  </div>
-</section>
 
 
 <section class="section" id="BibTeX">
