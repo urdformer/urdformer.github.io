@@ -176,6 +176,13 @@
       </br>
         We propose URDFormer, a pipeline towards large-scale simulation generation from real-world images.
       </h2>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-fullhd">
+    <div class="hero-body">
       <img src="https://urdformer.github.io/media/images/URDFormer_application.gif" class="interpolation-image"
          alt="Interpolate start reference image." />
       <h2 class="subtitle has-text-centered">
@@ -186,20 +193,6 @@
     </div>
   </div>
 </section>
-
-<!--<section class="hero teaser">-->
-<!--  <div class="container is-fullhd">-->
-<!--    <div class="hero-body">-->
-<!--      <img src="https://urdformer.github.io/media/images/URDFormer_application.gif" class="interpolation-image"-->
-<!--         alt="Interpolate start reference image." />-->
-<!--      <h2 class="subtitle has-text-centered">-->
-<!--      </br>-->
-<!--        URDFormer Applications: (a) To safely deploy a robot in the real world, we first generate the "digital" version of the real-world scene, then collect demonstrations in simulation and train a robot policy. This policy can be safely deployed in the real-world or for future real-world finetuning.&ndash;&gt;-->
-<!--      (b) Since URDFormer is based on RGB images only, we can potentially generate large-scale simulation environment from internet data that can emulate the real-world distrubtion.&ndash;&gt;-->
-<!--      </h2>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</section>-->
 
 <!--<section class="section">-->
 <!--  <div class="container is-max-widescreen">-->
@@ -309,7 +302,6 @@
             <img src="https://urdformer.github.io/media/images/pipeline.png" class="interpolation-image" alt="Interpolate start reference image." style="max-width: 100%; height: auto;" />
           </div>
         </div>
-        <div class="content is-small">
           <p>
             To train a network that takes real-world images and predicts their corresponding URDFs, we propose a forward-inverse pipeline. During Forward phase,
             we first randomly sample a URDF (This could be from a dataset or procedually generated) and load corresponding articulated assets. However, if we train a network
@@ -318,20 +310,18 @@
             their corresponding URDFs to supervise a network. Our hope is that the generated images can emulated the real-world complexicity such as lightings and textures, and
             enable the network predict correct URDFs given real-world images during the inverse phase.
           </p>
-        </div>
       </div>
     </div>
   </div>
 </section>
 
+
+
 <section class="hero teaser">
   <div class="columns is-centered has-text-centered">
     <div class="hero-body">
-    <h2 class="title is-3"> URDFormer: Forward (Part-consistent Image Generation) </h2>
-      <h2 class="subtitle has-text-centered">
-    </br>
-    </h2>
-    <div class="container">
+      <h2 class="title is-4">URDFormer: Overview</h2>
+          <div class="container">
       <img src="https://urdformer.github.io/media/images/inpainting_vs_ours.png" class="interpolation-image"
          alt="Interpolate start reference image." />
         <img src="https://urdformer.github.io/media/images/step_by_step.png" class="interpolation-image"
@@ -353,7 +343,7 @@
       </h2>
 
     </div>
-  </div>
+    </div>
   </div>
 </section>
 
