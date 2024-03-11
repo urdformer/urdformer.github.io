@@ -263,7 +263,7 @@
 <!-- Line separator. -->
 <div class="columns is-centered">
   <div class="column is-two-thirds">
-    <hr class="is-divider" style="height: 2px;">
+    <hr class="is-divider" style="height: 4px;">
   </div>
 </div>
 <!--/ Line separator. -->
@@ -352,49 +352,51 @@
   </div>
 </section>
 
+
 <section class="hero teaser">
   <div class="columns is-centered has-text-centered">
     <div class="hero-body">
-    <h2 class="title is-3">URDFormer: Forward (Network)</h2>
-      <h2 class="subtitle has-text-centered">
-    </br>
-    </h2>
-    <div class="container">
-      <img src="https://urdformer.github.io/media/images/inpainting_vs_ours.png" class="interpolation-image"
-         alt="Interpolate start reference image." />
-      <h2 class="subtitle has-text-centered">
-      </br>
-        Using the generated dataset, we can now train a transformer-based network called URDFormer. Note that URDFormer takes both RGB image as well as bounding boxes of its parts such as handles and drawers. During Training, the bounding boxes are automaticlly
-        obtained using the simulator, during inference time, we finetune GroundingDINO using model soup approach (See more details below). For each image crop, URDFormer classify what's the mesh type, position (Discretized), scale (Discretized) and parent. These
-        URDF primitives are fed into a URDF template and create the final URDF that can be loaded into a simulator.
-      </h2>
-
+      <h2 class="title is-4">URDFormer: Forward (Network)</h2>
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-two-thirds">
+            <img src="https://urdformer.github.io/media/images/urdformer.png" class="interpolation-image" alt="Interpolate start reference image." style="max-width: 100%; height: auto;" />
+          </div>
+        </div>
+          <p>
+            Using the generated dataset, we can now train a transformer-based network called URDFormer. Note that URDFormer takes both RGB image as well as bounding boxes of its parts such as handles and drawers. During Training, the bounding boxes are automaticlly
+            obtained using the simulator, during inference time, we finetune GroundingDINO using model soup approach (See more details below). For each image crop, URDFormer classify what's the mesh type, position (Discretized), scale (Discretized) and parent. These
+            URDF primitives are fed into a URDF template and create the final URDF that can be loaded into a simulator. For global scene prediction, we
+            train two separate networks: URDFormer (Global) focuses on predicting parent and spatial info of how to place the object. URDFormer
+            (Part) takes the cropped image containing each object and predicts detailed structure. The results of the two predictions are combined and
+            create the full scene prediction.
+          </p>
+      </div>
     </div>
-  </div>
   </div>
 </section>
 
+
 <section class="hero teaser">
   <div class="columns is-centered has-text-centered">
     <div class="hero-body">
-    <h2 class="title is-3">URDFormer: Inverse (Detection)</h2>
-      <h2 class="subtitle has-text-centered">
-    </br>
-    </h2>
-    <div class="container">
-      <img src="https://urdformer.github.io/media/images/model_soup.png" class="interpolation-image"
-         alt="Interpolate start reference image." />
-      <h2 class="subtitle has-text-centered">
-      </br>
-        Pretty interestingly, the generated photo-realistic dataset during the forward phrase can also be used to finetune an object detection model. We finetune GoundingDINO (liu et al., 2023),
-        an open-vocabulary object detection model on our generated dataset to improve detection on parts such as "oven door", "knob" and "drawer". When we evaluate the finetuned model,
-        although the finetuned performance shows visible improvement, For example, with a 13% gain on F1 score on cabinet images, we also observe the ability to detect cases such as
-        "a weird shaped handle" or "a drawer with a tilted angle" is worse. This is likely due to the finetuned model starts to "give up" some knowledge learned from the pretrained large real-world
-        dataset to fit into the generated dataset. Inspired by the insight from the recent work Model Soups (Wortsman et al., 2022), we combine the "knowledge" from both pretrained model and the finetuned model
-        by simply averaging their weights. This yield to surprising results: The F1 score is further improved by over 10%.
-      </h2>
+      <h2 class="title is-4">URDFormer: Inverse (Detection)</h2>
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-two-thirds">
+            <img src="https://urdformer.github.io/media/images/model_soup.png" class="interpolation-image" alt="Interpolate start reference image." style="max-width: 100%; height: auto;" />
+          </div>
+        </div>
+          <p>
+            Pretty interestingly, the generated photo-realistic dataset during the forward phrase can also be used to finetune an object detection model. We finetune GoundingDINO (liu et al., 2023),
+            an open-vocabulary object detection model on our generated dataset to improve detection on parts such as "oven door", "knob" and "drawer". When we evaluate the finetuned model,
+            although the finetuned performance shows visible improvement, For example, with a 13% gain on F1 score on cabinet images, we also observe the ability to detect cases such as
+            "a weird shaped handle" or "a drawer with a tilted angle" is worse. This is likely due to the finetuned model starts to "give up" some knowledge learned from the pretrained large real-world
+            dataset to fit into the generated dataset. Inspired by the insight from the recent work Model Soups (Wortsman et al., 2022), we combine the "knowledge" from both pretrained model and the finetuned model
+            by simply averaging their weights. This yield to surprising results: The F1 score is further improved by over 10%.
+          </p>
+      </div>
     </div>
-  </div>
   </div>
 </section>
 
@@ -402,7 +404,7 @@
 <!-- Line separator. -->
 <div class="columns is-centered">
   <div class="column is-two-thirds">
-    <hr class="is-divider" style="height: 2px;">
+    <hr class="is-divider" style="height: 4px;">
   </div>
 </div>
 <!--/ Line separator. -->
@@ -411,35 +413,31 @@
 <section class="hero teaser">
   <div class="columns is-centered has-text-centered">
     <div class="hero-body">
-    <h2 class="title is-3">Experiments: Articulated Digital Twins)</h2>
-      <h2 class="subtitle has-text-centered">
-    </br>
-      URDFormer enables fast simulation content generation directly from images, either from internet or captured from your phone.
-    </h2>
-    <div class="container">
-      <img src="https://urdformer.github.io/media/images/urdformer_cabinets.gif" class="interpolation-image"
-         alt="Interpolate start reference image." />
-      <h2 class="subtitle has-text-centered">
-      </br>
-       Predicted URDFs of cabinets with different configurations from internet images
-      </h2>
-
-      <img src="https://urdformer.github.io/media/images/urdformer_appliance.gif" class="interpolation-image"
-         alt="Interpolate start reference image." />
-      <h2 class="subtitle has-text-centered">
-      </br>
-        Predicted URDFs of different kitchen appliances from interenet images.
-      </h2>
-
-      <img src="https://urdformer.github.io/media/images/urdformer_phone_kitchens.gif" class="interpolation-image"
-         alt="Interpolate start reference image." />
-      <h2 class="subtitle has-text-centered">
-      </br>
-        We also visualize several examples of predicted URDFs of real-world kitchens captured by a phone.
-      </h2>
-
+      <h2 class="title is-3">Experiments: Articulated Digital Twins</h2>
+      <h2 class="subtitle">URDFormer enables fast simulation content generation directly from images, either from the internet or captured from your phone.</h2>
+      <div class="container">
+        <div class="columns is-multiline">
+          <div class="column is-full">
+            <figure class="image is-16by9">
+              <img src="https://urdformer.github.io/media/images/urdformer_cabinets.gif" alt="Predicted URDFs of cabinets with different configurations from internet images">
+            </figure>
+            <h3 class="subtitle">Predicted URDFs of cabinets with different configurations from internet images</h3>
+          </div>
+          <div class="column is-full">
+            <figure class="image is-16by9">
+              <img src="https://urdformer.github.io/media/images/urdformer_appliance.gif" alt="Predicted URDFs of different kitchen appliances from internet images">
+            </figure>
+            <h3 class="subtitle">Predicted URDFs of different kitchen appliances from internet images</h3>
+          </div>
+          <div class="column is-full">
+            <figure class="image is-16by9">
+              <img src="https://urdformer.github.io/media/images/urdformer_phone_kitchens.gif" alt="Predicted URDFs of real-world kitchens captured by a phone">
+            </figure>
+            <h3 class="subtitle">We also visualize several examples of predicted URDFs of real-world kitchens captured by a phone</h3>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
   </div>
 </section>
 
