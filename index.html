@@ -393,8 +393,8 @@
           <p>
             Pretty interestingly, the generated photo-realistic dataset during the forward phrase can also be used to finetune an object detection model. We finetune GoundingDINO (liu et al., 2023),
             an open-vocabulary object detection model on our generated dataset to improve detection on parts such as "oven door", "knob" and "drawer". When we evaluate the finetuned model,
-            although the finetuned performance shows visible improvement, For example, with a 13% gain on F1 score on cabinet images, we also observe the ability to detect cases such as
-            "a weird shaped handle" or "a drawer with a tilted angle" is worse. This is likely due to the finetuned model starts to "give up" some knowledge learned from the pretrained large real-world
+            although the finetuned performance shows visible improvement, with a 13% gain on F1 score on cabinet images, we also observe the ability to detect cases such as
+            "a weird shaped handle" got worse. This is likely due to the finetuned model starts to "give up" some knowledge learned from the pretrained large real-world
             dataset to fit into the generated dataset. Inspired by the insight from the recent work Model Soups (Wortsman et al., 2022), we combine the "knowledge" from both pretrained model and the finetuned model
             by simply averaging their weights. This yield to surprising results: The F1 score is further improved by over 10%.
           </p>
@@ -419,36 +419,30 @@
       <h2 class="title is-3">Experiments: Articulated Digital Twins</h2>
       <h2 class="subtitle">URDFormer enables fast simulation content generation directly from images, either from the internet or captured from your phone.</h2>
       <div class="container">
-        <div class="columns  is-centered">
+        <div class="columns is-multiline is-centered">
           <div class="column is-two-thirds">
+            <figure class="image">
               <img src="https://urdformer.github.io/media/images/urdformer_cabinets.gif" alt="Predicted URDFs of cabinets with different configurations from internet images">
+            </figure>
+            <p class="has-text-centered">(a) Predicted URDFs of cabinets with different configurations from internet images</p>
           </div>
-          <p>
-          (a) Predicted URDFs of cabinets with different configurations from internet images
-          </p>
-          </div>
-         <div class="columns  is-centered">
           <div class="column is-two-thirds">
+            <figure class="image">
               <img src="https://urdformer.github.io/media/images/urdformer_appliance.gif" alt="Predicted URDFs of different kitchen appliances from internet images">
+            </figure>
+            <p class="has-text-centered">(b) Predicted URDFs of different kitchen appliances from internet images</p>
           </div>
-          <p>
-          (b) Predicted URDFs of different kitchen appliances from internet images
-          </p>
-           </div>
-          <div class="columns  is-centered">
           <div class="column is-two-thirds">
+            <figure class="image">
               <img src="https://urdformer.github.io/media/images/urdformer_phone_kitchens.gif" alt="Predicted URDFs of real-world kitchens captured by a phone">
+            </figure>
+            <p class="has-text-centered">(c) We also visualize several examples of predicted URDFs of real-world kitchens captured by a phone</p>
           </div>
-          <p>
-            (c) We also visualize several examples of predicted URDFs of real-world kitchens captured by a phone
-          </p>
-            </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-
 <!--<section class="hero teaser">-->
 <!--  <div class="columns is-centered has-text-centered">-->
 <!--    <div class="hero-body">-->
