@@ -268,36 +268,59 @@
 </div>
 <!--/ Line separator. -->
 
+<!--<section class="hero teaser">-->
+<!--  <div class="columns is-centered has-text-centered">-->
+<!--    <div class="hero-body">-->
+<!--    <h2 class="title is-3">URDFormer: Overview</h2>-->
+<!--      <h2 class="subtitle has-text-centered">-->
+<!--    </br>-->
+<!--    </h2>-->
+<!--    <div class="container">-->
+<!--      <img src="https://urdformer.github.io/media/images/pipeline.png" class="interpolation-image"-->
+<!--         alt="Interpolate start reference image." />-->
+<!--      <h2 class="subtitle has-text-centered">-->
+<!--      </br>-->
+<!--        To train a network that takes real-world images and predicts their corresponding URDFs, we propose a forward-inverse pipeline. During Forward phase,-->
+<!--        we first randomly sample a URDF (This could be from a dataset or procedually generated) and load corresponding articulated assets. However, if we train a network-->
+<!--        with the initial texture, it likely won't generalize well to real-world images due to distribution shift. We leverage the power of image-conditioned stable diffusion-->
+<!--        that was pretrained on web-scale dataset, and convert the initial synthetic images into photo-realistic images. Now we automatically have paired realistic images with-->
+<!--        their corresponding URDFs to supervise a network. Our hope is that the generated images can emulated the real-world complexicity such as lightings and textures, and-->
+<!--        enable the network predict correct URDFs given real-world images during the inverse phase.-->
+<!--      </h2>-->
+
+<!--    </div>-->
+<!--  </div>-->
+<!--  </div>-->
+<!--</section>-->
 <section class="hero teaser">
   <div class="columns is-centered has-text-centered">
     <div class="hero-body">
-    <h2 class="title is-3"><span class="dcliport">URDFormer: Overview</span></h2>
-      <h2 class="subtitle has-text-centered">
-    </br>
-    </h2>
-    <div class="container">
-      <img src="https://urdformer.github.io/media/images/pipeline.png" class="interpolation-image"
-         alt="Interpolate start reference image." />
-      <h2 class="subtitle has-text-centered">
-      </br>
-        To train a network that takes real-world images and predicts their corresponding URDFs, we propose a forward-inverse pipeline. During Forward phase,
-        we first randomly sample a URDF (This could be from a dataset or procedually generated) and load corresponding articulated assets. However, if we train a network
-        with the initial texture, it likely won't generalize well to real-world images due to distribution shift. We leverage the power of image-conditioned stable diffusion
-        that was pretrained on web-scale dataset, and convert the initial synthetic images into photo-realistic images. Now we automatically have paired realistic images with
-        their corresponding URDFs to supervise a network. Our hope is that the generated images can emulated the real-world complexicity such as lightings and textures, and
-        enable the network predict correct URDFs given real-world images during the inverse phase.
-      </h2>
-
+      <h2 class="title is-4">URDFormer: Overview</h2>
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-two-thirds">
+            <img src="https://urdformer.github.io/media/images/pipeline.png" class="interpolation-image" alt="Interpolate start reference image." style="max-width: 100%; height: auto;" />
+          </div>
+        </div>
+        <div class="content is-small">
+          <p>
+            To train a network that takes real-world images and predicts their corresponding URDFs, we propose a forward-inverse pipeline. During Forward phase,
+            we first randomly sample a URDF (This could be from a dataset or procedually generated) and load corresponding articulated assets. However, if we train a network
+            with the initial texture, it likely won't generalize well to real-world images due to distribution shift. We leverage the power of image-conditioned stable diffusion
+            that was pretrained on web-scale dataset, and convert the initial synthetic images into photo-realistic images. Now we automatically have paired realistic images with
+            their corresponding URDFs to supervise a network. Our hope is that the generated images can emulated the real-world complexicity such as lightings and textures, and
+            enable the network predict correct URDFs given real-world images during the inverse phase.
+          </p>
+        </div>
+      </div>
     </div>
-  </div>
   </div>
 </section>
 
-
 <section class="hero teaser">
   <div class="columns is-centered has-text-centered">
     <div class="hero-body">
-    <h2 class="title is-3"><span class="dcliport">URDFormer: Forward (Part-consistent Image Generation)</span></h2>
+    <h2 class="title is-3"> URDFormer: Forward (Part-consistent Image Generation) </h2>
       <h2 class="subtitle has-text-centered">
     </br>
     </h2>
@@ -330,7 +353,7 @@
 <section class="hero teaser">
   <div class="columns is-centered has-text-centered">
     <div class="hero-body">
-    <h2 class="title is-3"><span class="dcliport">URDFormer: Forward (Network)</span></h2>
+    <h2 class="title is-3">URDFormer: Forward (Network)</h2>
       <h2 class="subtitle has-text-centered">
     </br>
     </h2>
@@ -352,7 +375,7 @@
 <section class="hero teaser">
   <div class="columns is-centered has-text-centered">
     <div class="hero-body">
-    <h2 class="title is-3"><span class="dcliport">URDFormer: Inverse (Detection)</span></h2>
+    <h2 class="title is-3">URDFormer: Inverse (Detection)</h2>
       <h2 class="subtitle has-text-centered">
     </br>
     </h2>
@@ -380,7 +403,7 @@
 <section class="hero teaser">
   <div class="columns is-centered has-text-centered">
     <div class="hero-body">
-    <h2 class="title is-3"><span class="dcliport">URDFormer: Experiments (1. Visualization)</span></h2>
+    <h2 class="title is-3">URDFormer: Experiments (1. Visualization)</h2>
       <h2 class="subtitle has-text-centered">
     </br>
       URDFormer enables fast simulation content generation directly from images, either from internet or captured from your phone.
