@@ -420,65 +420,80 @@
   </div>
 </section>
 
-<section class="hero teaser">
-  <div class="columns is-centered has-text-centered">
-    <div class="hero-body">
-    <h2 class="title is-3"><span class="dcliport">URDFormer: Experiments (2. Real-to-Sim-to-Real for safer real-world deployment)</span></h2>
-      <h2 class="subtitle has-text-centered">
-    </br>
-       Given one image of the object, URDFormer predicts its URDF and automatically collect successful demonstration in a simulator. We modified M2T2 (Yuan et al., 2023) that takes RGB pointclouds,
-        and current endeffector pose, and predict the next endeffector pose.
-    </h2>
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-fullbody">
-          <video poster="" id="fullbody" autoplay controls muted loop height="100%">
-            <source src="https://urdformer.github.io/media/videos/real_world1.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-shiba">
-          <video poster="" id="shiba" autoplay controls muted loop height="100%">
-            <source src="https://urdformer.github.io/media/videos/real_world2.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-</section>
-
 <!--<section class="hero teaser">-->
 <!--  <div class="columns is-centered has-text-centered">-->
 <!--    <div class="hero-body">-->
-<!--    <h2 class="title is-3"><span class="dcliport">Reality Gym</span></h2>-->
+<!--    <h2 class="title is-3">URDFormer: Experiments (2. Real-to-Sim-to-Real for safer real-world deployment)</h2>-->
 <!--      <h2 class="subtitle has-text-centered">-->
 <!--    </br>-->
-<!--       URDFormer enables efficient interactive scene generation directly from images, this allows us to create environments that emulate the real-world distribution.-->
-<!--        We introduce Reality Gym, an Gym environment that imports assets generated from internet images and automatically create language conditioned demonstrations, for tasks on-->
-<!--        "open [any articulated parts]", "close [any articulated parts]", "Fetch [the object]" and "collect [the object]". We leverage the privilate information obtained from simulation,-->
-<!--        to automatically fill in the part names from their spatial information, such as "top middle drawer" or "bottom left door". We combine motion planning from Curobo and create-->
-<!--        a successful dataset to train a robot and complate these tasks on the internet-originated assets.-->
+<!--       Given one image of the object, URDFormer predicts its URDF and automatically collect successful demonstration in a simulator. We modified M2T2 (Yuan et al., 2023) that takes RGB pointclouds,-->
+<!--        and current endeffector pose, and predict the next endeffector pose.-->
 <!--    </h2>-->
 <!--    <div class="container">-->
 <!--      <div id="results-carousel" class="carousel results-carousel">-->
 <!--        <div class="item item-fullbody">-->
-<!--          <img src="https://urdformer.github.io/media/images/reality_gym.gif" class="interpolation-image"-->
-<!--         alt="Interpolate start reference image." />-->
+<!--          <video poster="" id="fullbody" autoplay controls muted loop height="100%">-->
+<!--            <source src="https://urdformer.github.io/media/videos/real_world1.mp4"-->
+<!--                    type="video/mp4">-->
+<!--          </video>-->
 <!--        </div>-->
-
+<!--        <div class="item item-shiba">-->
+<!--          <video poster="" id="shiba" autoplay controls muted loop height="100%">-->
+<!--            <source src="https://urdformer.github.io/media/videos/real_world2.mp4"-->
+<!--                    type="video/mp4">-->
+<!--          </video>-->
+<!--        </div>-->
 <!--      </div>-->
 <!--    </div>-->
 <!--  </div>-->
 <!--  </div>-->
 <!--</section>-->
 
+<section class="hero teaser">
+  <div class="columns is-centered has-text-centered">
+    <div class="hero-body">
+      <h2 class="title is-3">Experiments: Real-to-Sim-to-Real for safer real-world deployment</h2>
+      <h2 class="subtitle">
+        Given one image of the object, URDFormer predicts its URDF and automatically collects successful demonstrations in a simulator.
+        We modified M2T2 (Yuan et al., 2023) that takes RGB point clouds, and the current end-effector pose, and predicts the next end-effector pose.
+      </h2>
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-half">
+            <div class="video-container">
+              <video poster="" id="fullbody" autoplay controls muted loop>
+                <source src="https://urdformer.github.io/media/videos/real_world1.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="column is-half">
+            <div class="video-container">
+              <video poster="" id="shiba" autoplay controls muted loop>
+                <source src="https://urdformer.github.io/media/videos/real_world2.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<style>
+  .video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio (height / width) */
+  }
 
-
-
-
+  .video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
 
 
 
