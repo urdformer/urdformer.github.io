@@ -63,7 +63,7 @@
             ISAGrasp
           </a>
           <a class="navbar-item" target="_blank" href="https://genaug.github.io/">
-            URDFormer
+            GenAug
           </a>
         </div>
       </div>
@@ -146,7 +146,7 @@
                   <span class="icon">
                       <i class="fab fa-github"></i>
                   </span>
-                  <span>Reality Gym</span>
+                  <span>Reality Gym (Coming soon!)</span>
                   </a>
               </span>
               <span class="link-block">
@@ -155,7 +155,7 @@
                   <span class="icon">
                       <i class="fab fa-github"></i>
                   </span>
-                  <span>Robot Setup</span>
+                  <span>Real-World Setup (Coming soon!)</span>
                   </a>
               </span>
             </div>
@@ -180,6 +180,7 @@
   </div>
 </section>
 
+
 <section class="section">
   <div class="container is-max-widescreen">
     <div class="rows">
@@ -189,13 +190,13 @@
 <!--        <h2 class="title is-3"><span class="dcliport">GenAug</span></h2>-->
 
         <!-- Interpolating. -->
-        <h3 class="title is-4"> <b>URDFormer Application</b></h3>
-        <img src="https://urdformer.github.io/media/images/application.png" class="interpolation-image"
+        <h3 class="title is-4"> <b>URDFormer Applications</b></h3>
+        <img src="https://urdformer.github.io/media/images/URDFormer_application.gif" class="interpolation-image"
          alt="Interpolate start reference image." />
         <br/>
         <br/>
-          Examples of application for URDFormer. (a) To safely deploy a robot in the real world, we first generate the "digital" version of the real-world scene, then train a robot in simulation and deploy in the real-world.
-        (b) Since URDFormer is based on RGB images, we can potentially generate large-scale simulation environment from internet data that can emulate the real-world distrubtion. 
+          Examples of application for URDFormer. (a) To safely deploy a robot in the real world, we first generate the "digital" version of the real-world scene, then collect demonstrations in simulation and train a robot policy. This policy can be safely deployed in the real-world or for future real-world finetuning.
+        (b) Since URDFormer is based on RGB images only, we can potentially generate large-scale simulation environment from internet data that can emulate the real-world distrubtion.
         <br/>
 
      </div>
@@ -203,6 +204,7 @@
     </div>
   </div>
 </section>
+
 
 
 <section class="section">
@@ -245,10 +247,121 @@
 
 </section>
 
+
+
 <section class="hero teaser">
   <div class="columns is-centered has-text-centered">
     <div class="hero-body">
-    <h2 class="title is-3"><span class="dcliport">Articulated Digital Twins from Images</span></h2>
+    <h2 class="title is-3"><span class="dcliport">URDFormer: Overview</span></h2>
+      <h2 class="subtitle has-text-centered">
+    </br>
+    </h2>
+    <div class="container">
+      <img src="https://urdformer.github.io/media/images/pipeline.png" class="interpolation-image"
+         alt="Interpolate start reference image." />
+      <h2 class="subtitle has-text-centered">
+      </br>
+        To train a network that takes real-world images and predicts their corresponding URDFs, we propose a forward-inverse pipeline. During Forward phase,
+        we first randomly sample a URDF (This could be from a dataset or procedually generated) and load corresponding articulated assets. However, if we train a network
+        with the initial texture, it likely won't generalize well to real-world images due to distribution shift. We leverage the power of image-conditioned stable diffusion
+        that was pretrained on web-scale dataset, and convert the initial synthetic images into photo-realistic images. Now we automatically have paired realistic images with
+        their corresponding URDFs to supervise a network. Our hope is that the generated images can emulated the real-world complexicity such as lightings and textures, and
+        enable the network predict correct URDFs given real-world images during the inverse phase.
+      </h2>
+
+    </div>
+  </div>
+  </div>
+</section>
+
+
+<section class="hero teaser">
+  <div class="columns is-centered has-text-centered">
+    <div class="hero-body">
+    <h2 class="title is-3"><span class="dcliport">URDFormer: Forward (Part-consistent Image Generation)</span></h2>
+      <h2 class="subtitle has-text-centered">
+    </br>
+    </h2>
+    <div class="container">
+      <img src="https://urdformer.github.io/media/images/inpainting_vs_ours.png" class="interpolation-image"
+         alt="Interpolate start reference image." />
+        <img src="https://urdformer.github.io/media/images/step_by_step.png" class="interpolation-image"
+         alt="Interpolate start reference image." />
+        <img src="https://urdformer.github.io/media/images/part_consistent_cabs.png" class="interpolation-image"
+         alt="Interpolate start reference image." />
+      <h2 class="subtitle has-text-centered">
+      </br>
+        Given an intinital poorly-rendered simulation images, we want to convert them into photo-realistic images. However, if we directly use off-the-shelf stable diffusion models,
+        it usually ignores the local configuration and produce images that do not match the original structures. Instead, we first collect a small set of texture images, and use stable
+        diffusion to generate a much bigger dataset of texture images. We then apply perspective warping to put a randomly selected texture image on the region of the image and iteratively
+        apply this step for all the parts of the object. This simple approach surprisingly works well at reserving local structures while providing realism to the original image.
+      </h2>
+      <img src="https://urdformer.github.io/media/images/data_generation.png" class="interpolation-image"
+         alt="Interpolate start reference image." />
+      <h2 class="subtitle has-text-centered">
+      </br>
+        Examples of generated training set given the original synthetic images.
+      </h2>
+
+    </div>
+  </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="columns is-centered has-text-centered">
+    <div class="hero-body">
+    <h2 class="title is-3"><span class="dcliport">URDFormer: Forward (Network)</span></h2>
+      <h2 class="subtitle has-text-centered">
+    </br>
+    </h2>
+    <div class="container">
+      <img src="https://urdformer.github.io/media/images/inpainting_vs_ours.png" class="interpolation-image"
+         alt="Interpolate start reference image." />
+      <h2 class="subtitle has-text-centered">
+      </br>
+        Using the generated dataset, we can now train a transformer-based network called URDFormer. Note that URDFormer takes both RGB image as well as bounding boxes of its parts such as handles and drawers. During Training, the bounding boxes are automaticlly
+        obtained using the simulator, during inference time, we finetune GroundingDINO using model soup approach (See more details below). For each image crop, URDFormer classify what's the mesh type, position (Discretized), scale (Discretized) and parent. These
+        URDF primitives are fed into a URDF template and create the final URDF that can be loaded into a simulator.
+      </h2>
+
+    </div>
+  </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="columns is-centered has-text-centered">
+    <div class="hero-body">
+    <h2 class="title is-3"><span class="dcliport">URDFormer: Inverse (Detection)</span></h2>
+      <h2 class="subtitle has-text-centered">
+    </br>
+    </h2>
+    <div class="container">
+      <img src="https://urdformer.github.io/media/images/model_soup.png" class="interpolation-image"
+         alt="Interpolate start reference image." />
+      <h2 class="subtitle has-text-centered">
+      </br>
+        Pretty interestingly, the generated photo-realistic dataset during the forward phrase can also be used to finetune an object detection model. We finetune GoundingDINO (liu et al., 2023),
+        an open-vocabulary object detection model on our generated dataset to improve detection on parts such as "oven door", "knob" and "drawer". When we evaluate the finetuned model,
+        although the finetuned performance shows visible improvement, For example, with a 13% gain on F1 score on cabinet images, we also observe the ability to detect cases such as
+        "a weird shaped handle" or "a drawer with a tilted angle" is worse. This is likely due to the finetuned model starts to "give up" some knowledge learned from the pretrained large real-world
+        dataset to fit into the generated dataset. Inspired by the insight from the recent work Model Soups (Wortsman et al., 2022), we combine the "knowledge" from both pretrained model and the finetuned model
+        by simply averaging their weights. This yield to surprising results: The F1 score is further improved by over 10%.
+      </h2>
+    </div>
+  </div>
+  </div>
+</section>
+
+
+
+
+
+<section class="hero teaser">
+  <div class="columns is-centered has-text-centered">
+    <div class="hero-body">
+    <h2 class="title is-3"><span class="dcliport">URDFormer: Experiments (1. Visualization)</span></h2>
       <h2 class="subtitle has-text-centered">
     </br>
       URDFormer enables fast simulation content generation directly from images, either from internet or captured from your phone.
@@ -280,41 +393,41 @@
   </div>
 </section>
 
+<section class="hero teaser">
+  <div class="columns is-centered has-text-centered">
+    <div class="hero-body">
+    <h2 class="title is-3"><span class="dcliport">URDFormer: Experiments (2. Real-to-Sim-to-Real for safer real-world deployment)</span></h2>
+      <h2 class="subtitle has-text-centered">
+    </br>
+       Given one image of the object, URDFormer predicts its URDF and automatically collect successful demonstration in a simulator. We modified M2T2 (Yuan et al., 2023) that takes RGB pointclouds,
+        and current endeffector pose, and predict the next endeffector pose.
+    </h2>
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop height="100%">
+            <source src="https://urdformer.github.io/media/videos/real_world1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay controls muted loop height="100%">
+            <source src="https://urdformer.github.io/media/videos/real_world1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
 
-<!--<section class="hero teaser">-->
-<!--  <div class="columns is-centered has-text-centered">-->
-<!--    <div class="hero-body">-->
-<!--    <h2 class="title is-3"><span class="dcliport">Real-World Experiments</span></h2>-->
-<!--      <h2 class="subtitle has-text-centered">-->
-<!--    </br>-->
-<!--       Given one image of the object, URDFormer predicts its URDF and automatically collect successful demonstration in a simulator. We train a -->
-<!--    </h2>-->
-<!--    <div class="container">-->
-<!--      <div id="results-carousel" class="carousel results-carousel">-->
-<!--        <div class="item item-fullbody">-->
-<!--          <video poster="" id="fullbody" autoplay controls muted loop height="100%">-->
-<!--            <source src="https://urdformer.github.io/media/videos/real_world1.mp4"-->
-<!--                    type="video/mp4">-->
-<!--          </video>-->
-<!--        </div>-->
-<!--        <div class="item item-steve">-->
-<!--          <video poster="" id="steve" autoplay controls muted loop height="100%">-->
-<!--            <source src="https://urdformer.github.io/media/videos/real_world1.mp4"-->
-<!--                    type="video/mp4">-->
-<!--          </video>-->
-<!--        </div>-->
-
-<!--        <div class="item item-shiba">-->
-<!--          <video poster="" id="shiba" autoplay controls muted loop height="100%">-->
-<!--            <source src="https://urdformer.github.io/media/videos/real_world2.mp4"-->
-<!--                    type="video/mp4">-->
-<!--          </video>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  </div>-->
-<!--</section>-->
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay controls muted loop height="100%">
+            <source src="https://urdformer.github.io/media/videos/real_world2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
 
 <!--<section class="hero teaser">-->
 <!--  <div class="columns is-centered has-text-centered">-->
