@@ -377,7 +377,7 @@
             The bbox labels can be easily obtained in simulation during forward step, but how about when we apply this to the real-world images?
             Interestingly, the photo-realistic dataset generated during the forward phase (see above (c) and (d)) can also be used to fine-tune an object detection model.
             We fine-tune GroundingDINO (Liu et al., 2023), an open-vocabulary object detection model, on our generated dataset to improve detection of parts such as "oven door," "knob," and "drawer."
-
+            </br>
             <strong> (b) Model Soup Approach for Finetuning: </strong> When evaluating the fine-tuned model, although its performance shows visible improvement, with a 13% gain in F1 score for cabinet images,
             we also observe a decreased ability to detect cases such as "a weird-shaped handle." This is likely because the fine-tuned model starts to
             "give up" some knowledge learned from the pretrained large real-world dataset to fit into the generated dataset. Inspired by insights from
