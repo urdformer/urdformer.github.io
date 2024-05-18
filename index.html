@@ -326,8 +326,9 @@
               <strong>(a) Motivation:</strong> Given initial poorly-rendered simulation images, we want to convert them into photorealistic images. However, if we directly use off-the-shelf stable diffusion (Robin Rombach et al., 2022) models,
               they usually ignore the local configuration and produce images that do not match the original structures.
              </p>
-
           </div>
+          </div>
+          <div class="columns is-centered">
           <div class="column is-two-thirds">
             <img src="https://urdformer.github.io/media/images/part_aware.png" class="interpolation-image" alt="Interpolate start reference image." style="max-width: 100%; height: auto;" />
           <p>
@@ -336,7 +337,7 @@
             apply this step for all the parts of the object. This simple approach surprisingly works well at preserving local structures while providing diverse realism to the original image.
          </p>
           </div>
-        </div>
+          </div>
         <div class="columns is-centered">
           <div class="column is-two-thirds">
             <img src="https://urdformer.github.io/media/images/part_consistent_cabs.png" class="interpolation-image" alt="Interpolate start reference image." style="max-width: 100%; height: auto;" />
