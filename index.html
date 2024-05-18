@@ -590,11 +590,9 @@
       <p class="has-text-centered">
         (a) Part Detection: the performance of URDFormer still relies on the performance of bounding box detection.
         </br>
-        (b) Texture and Meshes: URDFormer focuses on predicting kinematic URDF structures and uses predefined meshes that might not match the real-world scenes. To apply textures, we simply assume all parts are rectangular shapes, and use the bounding box of each object part to crop the image and import it into a uv map template. However, this does not work for irregular meshes such as a donut-shape door, or when the object in the image is tilted.
+        (b) URDFormer uses predefined meshes that might not match the real-world scenes.
         </br>
-        (c) Primitives URDFormer currently only supports articulated objects that have limited joint types such as prismatic and revolute, and cannot predict complex objects such as cars and lamps.
-        </br>
-        (d) Limited URDF primitives: URDFormer does not predict physics parameters such as mass or friction.
+        (c) Limited URDF primitives: URDFormer does not predict physics parameters such as mass or friction.
       </p>
     </div>
   </div>
