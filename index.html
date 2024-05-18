@@ -316,7 +316,7 @@
 <section class="hero teaser">
   <div class="columns is-centered has-text-centered">
     <div class="hero-body">
-      <h2 class="title is-3">Details</h2>
+      <h2 class="title is-3">Method</h2>
       <h2 class="title is-4">URDFormer: Forward (Generating Photorealistic Image-URDF pairs)</h2>
       <div class="container">
         <div class="columns is-centered">
@@ -332,7 +332,7 @@
           <div class="column is-two-thirds">
             <img src="https://urdformer.github.io/media/images/part_aware.png" class="interpolation-image" alt="Interpolate start reference image." style="max-width: 100%; height: auto;" />
           <p>
-            <strong>(b) Method:</strong> Instead, we first collect a small set of texture images and use stable
+            <strong>(b) Step-by-step Approach:</strong> Instead, we first collect a small set of texture images and use stable
             diffusion to generate a much larger dataset of texture images. We then apply perspective warping to put a randomly selected texture image on the region of the image and iteratively
             apply this step for all the parts of the object. This simple approach surprisingly works well at preserving local structures while providing diverse realism to the original image.
          </p>
@@ -429,7 +429,8 @@
 <section class="hero teaser">
   <div class="columns is-centered has-text-centered">
     <div class="hero-body">
-      <h2 class="title is-3">Experiments: Articulated Digital Twins</h2>
+      <h2 class="title is-3">Experiments</h2>
+      <h2 class="title is-4">Convert Images into Simulation Content</h2>
       <h2 class="subtitle">URDFormer enables fast simulation content generation directly from images, whether they're sourced from the internet or captured with your phone.</h2>
       <div class="container">
         <div class="columns is-multiline is-centered">
@@ -437,19 +438,25 @@
             <figure class="image">
               <img src="https://urdformer.github.io/media/images/urdformer_cabinets.gif" alt="Predicted URDFs of cabinets with different configurations from internet images">
             </figure>
-            <p class="has-text-centered">(a) Predicted URDFs for cabinets in various configurations derived from internet images.</p>
+            <p class="has-text-centered">(a) Predicted URDFs for cabinets in various configurations directly from internet images.</p>
           </div>
           <div class="column is-two-thirds">
             <figure class="image">
               <img src="https://urdformer.github.io/media/images/urdformer_appliance.gif" alt="Predicted URDFs of different kitchen appliances from internet images">
             </figure>
-            <p class="has-text-centered">(b) Predicted URDFs for kitchen appliances in various configurations derived from internet images.</p>
+            <p class="has-text-centered">(b) Predicted URDFs for kitchen appliances in various configurations directly from internet images.</p>
+          </div>
+          <div class="column is-two-thirds">
+            <figure class="image">
+              <img src="https://urdformer.github.io/media/images/urdformer_appliance.gif" alt="Predicted URDFs of different kitchen appliances from internet images">
+            </figure>
+            <p class="has-text-centered">(c) Predicted URDFs for kitchens with different layouts directly from internet images.</p>
           </div>
           <div class="column is-two-thirds">
             <figure class="image">
               <img src="https://urdformer.github.io/media/images/urdformer_phone_kitchens.gif" alt="Predicted URDFs of real-world kitchens captured by a phone">
             </figure>
-            <p class="has-text-centered">(c) We also visualize several examples of predicted URDFs from real-world kitchens captured using a phone.</p>
+            <p class="has-text-centered">(d) We also visualize several examples of predicted URDFs from real-world kitchens captured using a phone.</p>
           </div>
         </div>
       </div>
@@ -462,7 +469,8 @@
 <section class="hero teaser">
   <div class="columns is-centered has-text-centered">
     <div class="hero-body">
-      <h2 class="title is-3">Experiments: Real-to-Sim-to-Real for safer real-world deployment</h2>
+      <h2 class="title is-3">Application</h2>
+      <h2 class="title is-4">Real-to-Sim-to-Real for safer real-world deployment</h2>
       <div class="container">
         <div class="columns is-multiline is-centered">
           <div class="column is-two-thirds">
@@ -477,6 +485,82 @@
              <p>Given a single image of an object, URDFormer predicts its URDF, automatically collects data,
                and trains a robot within a simulator. The learned policy can then be transferred to the real world for safer deployment.</p>
           </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay muted loop height="100%">
+            <source src="media/videos/robots/stretch.mov"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay muted loop height="100%">
+            <source src="media/videos/robots/open_top_left_drawer.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay muted loop height="100%">
+            <source src="media/videos/robots/close_right_door.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay muted loop height="100%">
+            <source src="media/videos/robots/open_door.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-blueshirt">
+          <video poster="" id="blueshirt" autoplay muted loop height="100%">
+            <source src="media/videos/robots/close_door.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay muted loop height="100%">
+            <source src="media/videos/robots/fetch_object.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay muted loop height="100%">
+            <source src="media/videos/robots/top_drawer.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+       <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay muted loop height="100%">
+            <source src="media/videos/robots/collect_object.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay muted loop height="100%">
+            <source src="media/videos/robots/top_middle_drawer.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay muted loop height="100%">
+            <source src="media/videos/robots/open_drawer.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+       <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay muted loop height="100%">
+            <source src="media/videos/robots/close_drawer.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
 
         </div>
       </div>
