@@ -470,7 +470,7 @@
   <div class="columns is-centered has-text-centered">
     <div class="hero-body">
       <h2 class="title is-3">Application</h2>
-      <h2 class="title is-4">Real-to-Sim-to-Real for safer real-world deployment</h2>
+      <h2 class="title is-4">1. Real-to-Sim-to-Real for safer real-world deployment</h2>
       <div class="container">
         <div class="columns is-multiline is-centered">
           <div class="column is-two-thirds">
@@ -491,13 +491,15 @@
     </div>
   </div>
 </section>
+
+
 <section class="hero is-light is-small">
   <div class="hero-body">
     <div class="container">
       <div id="results-carousel" class="carousel results-carousel">
         <div class="item item-chair-tp">
           <video poster="" id="chair-tp" autoplay muted loop height="100%">
-            <source src="media/videos/robots/stretch.mov"
+            <source src="media/videos/robots/stretch.mp4"
                     type="video/mp4">
           </video>
         </div>
@@ -567,13 +569,17 @@
     </div>
   </div>
 </section>
+<h2 class="subtitle has-text-centered">
+</br>
+  We show train a multi-task policy per object given language conditions, and evaluate the real-to-sim-to-real pipeline of URDFormer on two robots: Tabletop manipulation with a UR5 robot, and a mobile robot Stretch.
+</h2>
 
 
 <section class="hero teaser">
   <div class="columns is-centered has-text-centered">
     <div class="hero-body">
-      <h2 class="title is-3">Experiments: Reality Gym</h2>
-      <h2 class="subtitle">We have created a Gym environment named Reality Gym, featuring assets originated from internet images. We will release Reality Gym soon and stay tuned!</h2>
+      <h2 class="title is-4">2. Train and Benchmark in Simulation with real-world scenes</h2>
+      <h2 class="subtitle">We also created a Gym environment named Reality Gym, featuring assets originated from internet images. </h2>
       <div class="container">
         <div class="columns is-multiline is-centered">
           <div class="column is-two-thirds">
@@ -599,6 +605,24 @@
     </div>
   </div>
 </section>
+
+
+
+<section class="hero teaser">
+  <div class="columns is-centered has-text-centered">
+    <div class="hero-body">
+      <h2 class="title is-3">Limitations</h2>
+      <h2 class="subtitle">Please see the full list of limitations and future work in our paper </h2>
+      <p class="has-text-centered">
+        (a) Part Detection: the performance of URDFormer still relies on the performance of bounding box detection.
+        (b) Texture and Meshes: URDFormer focuses on predicting kinematic URDF structures and uses predefined meshes that might not match the real-world scenes. To apply textures, we simply assume all parts are rectangular shapes, and use the bounding box of each object part to crop the image and import it into a uv map template. However, this does not work for irregular meshes such as a donut-shape door, or when the object in the image is tilted.
+        (c) Primitives URDFormer currently only supports articulated objects that have limited joint types such as prismatic and revolute, and cannot predict complex objects such as cars and lamps.
+        (d) Limited URDF primitives: URDFormer does not predict physics parameters such as mass or friction.
+      </p>
+    </div>
+  </div>
+</section>
+
 
 
 <section class="section" id="BibTeX">
